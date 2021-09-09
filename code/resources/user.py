@@ -4,22 +4,24 @@ from models.user import UserModel
 
 class UserRegister(Resource):
     parser = reqparse.RequestParser()
+
     parser.add_argument('username',
-    type=str,
-    required=True,
-    help="this can not be blank"
-    )
-    parser = reqparse.RequestParser()
+        type=str,
+        required=True,
+        help="this can not be blank"
+        )
+
     parser.add_argument('password',
-    type=str,
-    required=True,
-    help="this can not be blank"
-    )
+        type=str,
+        required=True,
+        help="this can not be blank"
+        )
 
     def post(self):
-        date = UserRegister.parser.parse_args()
-
-        if UserModel.find_by_username(date['username']):
+        data = UserRegister.parser.parse_args()
+        print(data['password'])
+        #user = UserModel.find_by_username(data['username'])
+        if UserModel.find_by_username(data['username']):
             return {"message": "A user with this username already exists"}, 400
 
         user = UserModel(**data)

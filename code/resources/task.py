@@ -5,10 +5,27 @@ from models.task import  TaskModel
 
 class Task(Resource):
     parser = reqparse.RequestParser()
+
+    parser.add_argument('name',
+        type= str,
+        required=True,
+        help="every task must have a name"
+        )
+    parser.add_argument('description',
+        type= str,
+        required=True,
+        help="every task must have description"
+        )
+    parser.add_argument('created',
+        type= str,
+        required=True,
+        help="every task must have description"
+        )
     parser.add_argument('user_id',
-    type= int,
-    required=True,
-    help="every task is related to a user")
+        type= int,
+        required=True,
+        help="every task is related to a user"
+        )
 
 
     @jwt_required
@@ -18,9 +35,11 @@ class Task(Resource):
             return task.json()
         return {'message': 'Task not found'}, 404
 
-    def post(self, name, description):
+    def post(self):
         user_data = Task.parser.parse_args()
-        task = TaskModel(name, description, created, user_data)
+        print(user_data)
+        task = TaskModel(**user_data)
+        print(task)
         try:
             task.save_to_db()
         except:
@@ -42,10 +61,11 @@ class Task(Resource):
             task = TaskModel(name, description, user_data)
         else:
             task.name = name
+            task.description = description
             task.user_id = user_data
         
         task.save_to_db()
-        return task.json
+        return task.json()
 
 
 class TaskList(Resource):

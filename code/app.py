@@ -18,9 +18,13 @@ api = Api(app)
 #auth endpoint
 jwt = JWT(app, authenticate, identity) 
 #create db with sqlalchemy
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 #resources endpoints
-api.add_resource(Task, '/task/<integer:id')
+#api.add_resource(Task, '/task/<int:id>')
+api.add_resource(Task, '/task')
 api.add_resource(TaskList, '/tasks')
 api.add_resource(UserRegister, '/register')
 
