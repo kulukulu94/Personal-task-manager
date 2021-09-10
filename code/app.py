@@ -5,7 +5,7 @@ from flask_jwt import JWT
 
 #imports from packages within the project folder
 from security import authenticate, identity
-from resources.task import Task, TaskList
+from resources.task import  Create_Task, Task, TaskList
 from resources.user import UserRegister
 
 
@@ -15,16 +15,18 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'kulu'
 api = Api(app)
+
 #auth endpoint
 jwt = JWT(app, authenticate, identity) 
+
 #create db with sqlalchemy
 @app.before_first_request
 def create_tables():
     db.create_all()
 
 #resources endpoints
-#api.add_resource(Task, '/task/<int:id>')
-api.add_resource(Task, '/task')
+api.add_resource(Task, '/task/<int:id>')
+api.add_resource(Create_Task, '/task')
 api.add_resource(TaskList, '/tasks')
 api.add_resource(UserRegister, '/register')
 
