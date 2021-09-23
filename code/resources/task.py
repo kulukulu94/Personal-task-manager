@@ -1,3 +1,4 @@
+from flask import render_template, make_response
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.task import  TaskModel
@@ -93,4 +94,11 @@ class Task(Resource):
 
 class TaskList(Resource):
     def get(self):
-        return {'task': [x.json() for x in TaskModel.query.all()]}
+        tlist = [x.json() for x in TaskModel.find_all()]
+        headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('form.jinja2', tasklist=tlist),200, headers)
+        
+        #return {'task': [x.json() for x in TaskModel.query.all()]}
+        
+        #return  render_template('form.html', tasklist=tlist)
+        #return Response(render_template('test.html', result=test, mimetype='text/html'))

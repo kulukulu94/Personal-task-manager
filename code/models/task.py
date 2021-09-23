@@ -26,6 +26,10 @@ class TaskModel(db.Model):
     @classmethod
     def find_by_id(cls, id):
         return cls.query.filter_by(id = id).first()
+
+    @classmethod
+    def find_all(cls):
+        return cls.query.all()
     
     def save_to_db(self):
         db.session.add(self)
