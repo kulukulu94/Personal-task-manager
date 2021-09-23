@@ -1,6 +1,6 @@
 from flask import render_template, make_response
 from flask_restful import Resource, reqparse
-from flask_jwt import jwt_required
+from flask_jwt_extended import jwt_required
 from models.task import  TaskModel
 
 
@@ -70,7 +70,7 @@ class Task(Resource):
         if task:
             return task.json()
         return {'message': 'Task not found'}, 404
-
+    @jwt_required()
     def delete(self, id):
         task = TaskModel.find_by_id(id)
         if task:
