@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta chrset="UTF-8">
+       <title> Tasks List </title>
+    </head>
+    <body>
+    <h1>Hello</h1>
+    <ol>   
+    {% for task in tasklist %}
+    <li> <strong>Name</strong>: {{task.name}}, Description: {{task.description}} <br></li>
+    {% endfor %}
+    </ol>
+    </body>
+</html>
