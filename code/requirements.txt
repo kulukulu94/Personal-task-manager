@@ -1,4 +1,6 @@
 Flask
-Flask-JWT-Extended
 Flask-RESTful
 Flask-SQLAlchemy
+Flask-JWT-Extended
+uwsgi
+psycopg2
