@@ -26,9 +26,9 @@ def add_claims_to_jwt(identity):
     return {'is_admin': False}
 
 #create db with sqlalchemy
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# @app.before_first_request
+# def create_tables():
+#     db.create_all()
 
 #resources endpoints
 api.add_resource(Task, '/task/<int:id>')
