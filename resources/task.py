@@ -2,6 +2,7 @@ from flask import render_template, make_response
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
 from models.task import  TaskModel
+from blacklist import BLACKLIST
 
 
 class Create_Task(Resource):
@@ -82,7 +83,7 @@ class Task(Resource):
         data = Task.parser.parse_args()
         #print(data)
         task = TaskModel.find_by_id(id)
-        print(task)
+        #print(task)
         if task is None:
             task = TaskModel(**data)
         else:
@@ -93,6 +94,7 @@ class Task(Resource):
         return task.json()
 
 class TaskList(Resource):
+    @jwt_required()
     def get(self):
         tlist = [x.json() for x in TaskModel.find_all()]
         headers = {'Content-Type': 'text/html'}
