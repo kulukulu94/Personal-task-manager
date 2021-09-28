@@ -28,11 +28,18 @@ def add_claims_to_jwt(identity):
         return {'is_admin': True}
     return {'is_admin': False}
 
+
 @jwt.token_in_blocklist_loader
 def check_if_token_in_blacklist(jwt_header, jwt_payload):
         
         return jwt_payload['jti'] in BLACKLIST #jaw_payload['sub'] the id should be fetched from a db
 
+@jwt.unaurhorized_loader
+def missing_token_callback():
+    return jsonify({
+        'description': 'request has not authorization token',
+        'error': 'authorization_required'
+    }), 401
 
 @jwt.revoked_token_loader
 def revocked_token_callback(jwt_header, jwt_payload):
